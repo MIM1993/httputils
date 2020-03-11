@@ -54,7 +54,29 @@ func HttpGetWithTimeout(url string, params map[string]string, timeout time.Durat
 	return ret, nil
 }
 
-// GetParam 获取querystring 中的value
+
+// GetParam 获取querystring 中的value  url传值与form-data传值都可获取
+/*
+  demo：
+		func handlertest(c *gin.Context){
+		r := c.Request
+		w := c.Writer
+		r.ParseMultipartForm(32 << 20)
+		m := r.Form
+
+		faceStr := GetParam(m,"face","not_face")
+		if faceStr == "not_face" {
+			w.WriteString("get face image failure")
+			fmt.Printf("get param err: %s\n",errors.New("get face image err"))
+		}else {
+			fmt.Println("================================================")
+			fmt.Printf("face image :%s\n",faceStr)
+			fmt.Println("================================================")
+			w.WriteString("get face image successfully")
+		}
+	}
+
+*/
 func GetParam(m url.Values, key string, defVal string) string {
 	v, ok := m[key]
 	if ok && len(v[0]) > 0 {
@@ -91,4 +113,31 @@ func GetParamInt64(m url.Values, key string, defVal int64) int64 {
 	}
 
 	return val
+}
+
+
+func ConstructUrlWithParameter(url string, parames map[string]string) (urlRes string, err error) {
+	if parames == nil {
+		return "", errors.New("parames is nil")
+	}
+
+	defer func() {
+		if err != nil {
+			urlRes = ""
+		}
+	}()
+
+	strBuf := strings.Builder{}
+	_, err = strBuf.WriteString(url)
+	_, err = strBuf.WriteString("?")
+
+	var tempStr string
+	for key, value := range parames {
+		tempStr = fmt.Sprintf("%s=%s&", key, value)
+		_, err = strBuf.WriteString(tempStr)
+	}
+
+	urlRes = strBuf.String()
+
+	return urlRes[:len(urlRes)-1], err
 }
