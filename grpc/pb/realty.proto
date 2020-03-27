@@ -1,0 +1,571 @@
+// Copyright 2015 gRPC authors.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
+syntax = "proto3";
+package realty;
+
+import "google/api/annotations.proto";
+
+// The Realty service definition.
+service Realty {
+    // recognize
+    rpc Recognize (RecognizeRequest) returns (RecognizeResponse) {
+        option (google.api.http) = {
+         post:"/senserealty/v2.0/logic/recognize"
+         body:"*"
+        };
+    }
+
+    //identify
+    rpc Identify (IdentifyRequest) returns (IdentifyResponse) {
+        option (google.api.http) = {
+                    post: "/senserealty/v2.0/logic/identify"
+                    body: "*"
+                };
+    }
+
+    //trace
+    rpc Trace (TraceRequest) returns (TraceResponse) {
+        option (google.api.http) = {
+                    post: "/sensego/v2.0/mingyuan/trace"
+                    body: "*"
+                };
+    }
+
+    //multiidentify
+    rpc MultiGroupIdentify (MultiGroupIdentifyRequest) returns (MultiGroupIdentifyResponse) {
+        option (google.api.http) = {
+                    post: "/senserealty/v2.0/logic/multiidentify"
+                    body: "*"
+                };
+    }
+
+    //NVR and Bgimg
+    rpc NVRTaskProxyGET (NVRTaskProxyGETRequest) returns (NVRTaskProxyGETResponse) {
+        option (google.api.http) = {
+                    get: "/senserealty/v2.0/logic/nvr/task/status/get"
+//                    body: "*"
+                };
+    }
+
+    rpc NVRTaskProxyPOST (NVRTaskProxyPOSTRequest) returns (NVRTaskProxyPOSTResponse) {
+        option (google.api.http) = {
+                    post: "/senserealty/v2.0/logic/nvr/task/add"
+                    body: "*"
+                };
+    }
+
+    ///sensego/v2.0/realestate/personsearch
+    rpc MultiIdentify (MultiIdentifyRequest) returns (MultiIdentifyResponse) {
+        option (google.api.http) = {
+                    post: "/senserealty/v2.0/logic/personsearch"
+                    body: "*"
+                };
+    }
+
+    // /sensego/v2.0/realestate/trace
+    rpc IdentifyTrace (IdentifyTraceRequest) returns (IdentifyTraceResponse) {
+        option (google.api.http) = {
+                    post: "/senserealty/v2.0/logic/realestate/trace"
+                    body: "*"
+                };
+    }
+
+    // /sensego/v2.0/realestate/list
+    rpc GetTraceListByFlock (GetTraceListByFlockRequest) returns (GetTraceListByFlockResponse) {
+        option (google.api.http) = {
+                    post: "/senserealty/v2.0/logic/realestate/list"
+                    body: "*"
+                };
+    }
+
+    // /sensego/v2.0/internal
+    rpc Summary (SummaryRequest) returns (SummaryResponse) {
+        option (google.api.http) = {
+                    post: "/senserealty/v2.0/logic/summary"
+                    body: "*"
+                };
+    }
+
+    rpc Trend (TrendRequest) returns (TrendResponse) {
+        option (google.api.http) = {
+                    post: "/senserealty/v2.0/logic/trend"
+                    body: "*"
+                };
+    }
+
+    rpc Total (TotalRequest) returns (TotalResponse) {
+        option (google.api.http) = {
+                    post: "/senserealty/v2.0/logic/total"
+                    body: "*"
+                };
+    }
+
+    //  /identify-->Identify    /trace-->Trace  /realestate/trace-->IdentifyTrace  重复
+
+
+    rpc GetByHours (GetByHoursRequest) returns (GetByHoursResponse) {
+        option (google.api.http) = {
+                    post: "/senserealty/v2.0/logic/hours/summary"
+                    body: "*"
+                };
+    }
+
+    rpc GetByDays (GetByDaysRequest) returns (GetByDaysResponse) {
+        option (google.api.http) = {
+                    post: "/senserealty/v2.0/logic/days/summary"
+                    body: "*"
+                };
+    }
+
+    rpc FrequencyStatistics (FrequencyStatisticsRequest) returns (FrequencyStatisticsResponse) {
+        option (google.api.http) = {
+                    post: "/senserealty/v2.0/logic/frequency/summary"
+                    body: "*"
+                };
+    }
+
+    rpc GetCameraInfo (GetCameraInfoRequest) returns (GetCameraInfoResponse) {
+        option (google.api.http) = {
+                    post: "/senserealty/v2.0/logic/get/camerainfo"
+                    body: "*"
+                };
+    }
+
+    // /tracelist -->GetTraceListByFlock 重复
+
+    rpc GetStaffAttendance (GetStaffAttendanceRequest) returns (GetStaffAttendanceResponse) {
+        option (google.api.http) = {
+                    post: "/senserealty/v2.0/logic/staff/attendance"
+                    body: "*"
+                };
+    }
+
+    rpc FaceCheckQuality (FaceCheckQualityRequest) returns (FaceCheckQualityResponse) {
+        option (google.api.http) = {
+                    post: "/senserealty/v2.0/logic/face/checkquality"
+                    body: "*"
+                };
+    }
+
+}
+
+//Recognize
+message RecognizeRequest {
+    string ak = 1;
+    string request_id = 2;
+    string group_id = 3;
+    string device_id = 4;
+    string img = 5;
+    string camera_id = 6;
+    string camera_name = 7;
+    string camera_ip = 8;
+    string bg_image_id = 9;
+    string demo_mode = 10;
+    string track_ts = 11;
+    string add = 12;
+    string id =13;
+    string trackid =14;
+    string frameid = 15;
+}
+
+// The response message containing the greetings
+message RecognizeResponse {
+    string request_id = 1;
+    string error_code = 2;
+    string error_msg = 3;
+}
+
+//Identify
+message IdentifyRequest{
+    string ak = 1;
+    string request_id = 2;
+    string group_id = 3;
+    string id_image = 4;
+    string face_image = 5;
+}
+
+message Person{
+    string person_id = 1;
+    string arrived_at = 2;
+    string camera_id = 3;
+    string confidence = 4;
+    string image = 5;
+    string arrived_image_url = 6;
+}
+
+message IdentifyResponse{
+    string request_id = 1;
+    bool matched = 2;
+    repeated Person results = 3;
+    int32 error_code = 4;
+    string error_msg = 5;
+}
+
+//Trace
+message TraceRequest{
+    string ak = 1;
+    string request_id = 2;
+    string group_id = 3;
+    string persion_id = 4;
+    string limit = 5;
+}
+
+message PersonTrace{
+    string device_id = 1;
+    string camera_id = 2;
+    string image_url = 3;
+    string ts = 4;
+    string camera_name = 5;
+    string bg_image_id = 6;
+}
+
+message TraceResponse{
+    string error_code = 1;
+    string request_id = 2;
+    string group_id = 3;
+    string persion_id = 4;
+    repeated PersonTrace results = 5;
+}
+
+//MultiGroupIdentify
+message MultiGroupIdentifyRequest{
+    string ak = 1;
+    string request_id = 2;
+    string group_id = 3;
+    string id_image = 4;
+    string face_image = 5;
+}
+
+message PersonExtra{
+    string person_id = 1;
+    string arrived_at = 2;
+    string camera_id = 3;
+    string confidence = 4;
+    string image = 5;
+    string arrived_image_url = 6;
+    string group_id = 7;
+}
+
+message MultiGroupIdentifyResponse{
+    string request_id = 1;
+    bool matched = 2;
+    repeated PersonExtra results = 3;
+    int32 error_code = 4;
+    string error_msg = 5;
+}
+
+//NVRTaskProxyGET
+message NVRTaskProxyGETRequest{
+    string request_id = 1;
+    int64 timestamp = 2;
+    string device_id = 3;
+    string camera_id = 4;
+    string bg_image_id = 5;
+    string path = 6;
+}
+
+//todo: 无法确定 暂时待定
+message NVRTaskProxyGETResponse{
+    string resp_body = 1;
+}
+
+//NVRTaskProxyPOST
+message NVRTaskProxyPOSTRequest{
+    string request_id = 1;
+    int64 timestamp = 2;
+    string device_id = 3;
+    string camera_id = 4;
+    string bg_image_id = 5;
+    string path = 6;
+    string url_params = 7;
+}
+
+//todo: 无法确定 暂时待定
+message NVRTaskProxyPOSTResponse{
+    string resp_body = 1;
+}
+
+//MultiIdentify
+message MultiIdentifyRequest{
+    string ak = 1;
+    string request_id = 2;
+    string face_image = 3;
+    string limit = 4;
+    string group_ids = 5;
+}
+
+message SearchPersonResult{
+    string group_id = 1;
+    repeated string person_ids =2;
+}
+
+message MultiIdentifyResponse{
+    string request_id = 1;
+    int32 error_code = 2;
+    string error_msg = 3;
+    repeated SearchPersonResult lists = 4;
+}
+
+//IdentifyTrace
+message IdentifyTraceRequest{
+    string request_id = 1;
+    string group_id = 2;
+    string ak = 3;
+    string id_image = 4;
+    string face_image = 5;
+    string limit = 6;
+    string confidence = 7;
+}
+
+message IdentifyTracePerson{
+    string person_id = 1;
+    string arrived_at = 2;
+    string camera_id = 3;
+    string camera_name = 4;
+    string confidence = 5;
+    string arrived_image_url = 6;
+    repeated PersonTrace trace = 7;
+}
+
+message IdentifyTraceResponse{
+    int32 error_code = 1;
+    string error_msg = 2;
+    string request_id = 3;
+    bool matched = 4;
+    repeated IdentifyTracePerson results = 5;
+}
+
+//GetTraceListByFlock
+message GetTraceListByFlockRequest{
+    string request_id = 1;
+    string group_id = 2;
+    string person_ids = 3;
+    int32 limit = 4;
+    int32 skip = 5;
+}
+
+message FlockTrace{
+    string person_id = 1;
+    string store_id = 2;
+    string group_id = 3;
+    int32 age = 4;
+    string gender = 5;
+    int64 timestamp = 6;
+    string request_id = 7;
+    int64 tag_id = 8;
+}
+
+message GetTraceListByFlockResponse{
+    int32 error_code = 1;
+    string error_msg = 2;
+    string request_id = 3;
+    repeated FlockTrace list = 4;
+}
+
+//Summary
+message SummaryRequest{
+    string request_id = 1;
+    string group_id = 2;
+    string start_time = 3;
+    string end_time = 4;
+    string ask_id = 5;
+}
+
+message SummaryResponse{
+    int32 error_code = 1;
+    string error_msg = 2;
+    string request_id = 3;
+    string capture_count = 4;
+    string first_time_count = 5;
+    string ask_id = 6;
+}
+
+//Trend
+message TrendRequest{
+    string request_id = 1;
+    string group_id = 2;
+    string start_time = 3;
+    string end_time = 4;
+}
+
+message DailyResp{
+    string capture_count = 1;
+    string first_time_count = 2;
+    string date = 3;
+}
+
+message TrendResponse{
+    int32 error_code = 1;
+    string error_msg = 2;
+    string request_id = 3;
+    repeated DailyResp list = 4;
+}
+
+//Total
+message TotalRequest{
+    string request_id = 1;
+    string group_id = 2;
+}
+
+message TotalResponse{
+    int32 error_code = 1;
+    string error_msg = 2;
+    string request_id = 3;
+    string people_count = 4;
+}
+
+//GetByHours
+message GetByHoursRequest{
+    string request_id = 1;
+    string store_id = 2;
+    string camera_id = 3;
+    string end_time = 4;
+    string start_time = 5;
+}
+
+message TotalList{
+    string date = 1;
+    int64 total = 2;
+}
+
+message GenderList{
+    string gender = 1;
+    int64 total = 2;
+}
+
+message AgeList{
+    string generation = 1;
+    int64 total = 2;
+}
+
+message CalcInfo{
+    repeated TotalList total_lists = 1;
+    repeated GenderList gender_lists = 2;
+    repeated AgeList age_lists = 3;
+}
+
+message GetByHoursResponse{
+    int32 error_code = 1;
+    string error_msg = 2;
+    string request_id = 3;
+    CalcInfo info = 4;
+    int64 total = 5;
+}
+
+//GetByDays
+message GetByDaysRequest{
+    string request_id = 1;
+    string store_id = 2;
+    string camera_id = 3;
+    string start_time = 4;
+    string end_time = 5;
+}
+
+message GetByDaysResponse{
+    int32 error_code = 1;
+    string error_msg = 2;
+    string request_id = 3;
+    CalcInfo info = 4;
+    int64 total = 5;
+}
+
+//FrequencyStatistics
+message FrequencyStatisticsRequest{
+    string request_id = 1;
+    string store_id = 2 ;
+}
+
+message Rank{
+    string name = 1;
+    int32 count = 2;
+}
+
+message FrequencyStatisticsResponse{
+    int32 error_code = 1;
+    string error_msg = 2;
+    string request_id = 3;
+    repeated Rank frequency = 4;
+    repeated Rank client = 5;
+}
+
+//GetCameraInfo
+message GetCameraInfoRequest{
+    string request_id = 1;
+    string store_id = 2;
+    string start_time = 3;
+    string end_time = 4;
+}
+
+message CameraInfo{
+    string camera_name = 1;
+    string camera_id = 2;
+}
+
+message GetCameraInfoResponse{
+    int32 error_code = 1;
+    string error_msg = 2;
+    string request_id = 3;
+    repeated CameraInfo list = 4;
+}
+
+//GetStaffAttendance
+message GetStaffAttendanceRequest{
+    string request_id = 1;
+    string store_id = 2;
+    string start_date = 3;
+    string end_date = 4;
+    string person_ids = 5;
+}
+
+message StaffAttendance{
+    string date = 1;
+    string person_id = 2;
+    string store_id = 3;
+    string group_id = 4;
+    int64 clock_in_time = 5;
+    int64 clock_out_time = 6;
+    string presence_duration = 7;
+    int64 type_id = 8;
+    string created_at = 9;
+    string updated_at = 10;
+}
+
+message WeeklyAttendance{
+    string person_id = 1;
+    int32 attendance_days = 2;
+    string attendance_duration = 3;
+}
+
+message GetStaffAttendanceResponse{
+    int32 error_code = 1;
+    string error_msg = 2;
+    string request_id = 3;
+    int32 presence_num = 4;
+    repeated StaffAttendance presence_list = 5;
+    repeated WeeklyAttendance top_attendance_list = 6;
+}
+
+//FaceCheckQuality
+message FaceCheckQualityRequest{
+    string request_id = 1;
+    string ak = 2;
+    string image = 3;
+}
+
+message FaceCheckQualityResponse{
+    int32 error_code = 1;
+    string error_msg = 2;
+    string request_id = 3;
+}
